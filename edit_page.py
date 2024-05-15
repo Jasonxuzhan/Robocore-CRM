@@ -3,10 +3,31 @@ from ttkbootstrap.constants import *
 from tkinter import messagebox
 import mysql.connector
 
+# Button functions
+def clean_entries() -> None:
+    nation_entry.delete(0, END)
+    province_entry.delete(0, END) 
+    city_entry.delete(0, END) 
+    company_entry.delete(0, END) 
+    contact_entry.delete(0, END) 
+    telephone_entry.delete(0, END) 
+    scenario_entry.delete(0, END) 
+    cooperation_entry.delete(0, END) 
+    request_entry.delete(0, END) 
+    lead_from_entry.delete(0, END) 
+    lead_channel_entry.delete(0, END) 
+    channel_detail_entry.delete(0, END) 
+    answer_by_entry.delete(0, END)
+
+
+def create_customer() -> None:
+    pass
+
 
 class Edit_Page:
     def __init__(self):
         self.top = Toplevel()
+        self.top.title("Customer Edit")
 
         # Edit Frame in top
         self.edit_frame = Frame(self.top)
@@ -56,7 +77,7 @@ class Edit_Page:
         lead_channel_entry = Entry(self.edit_frame)
         channel_detail_entry = Entry(self.edit_frame)
         answer_by_entry = Entry(self.edit_frame)
-        customer_ID_label = Label(self.edit_frame, text="ID is auto generated")
+        customer_ID_label = Label(self.edit_frame, text="ID is generated auto")
 
         # Position of Labeles and Entries in edit frame
         # Row0
@@ -106,6 +127,10 @@ class Edit_Page:
         self.customer_ID.grid(row=4, column=2, padx=10, pady=20)
         customer_ID_label.grid(row=4, column=3, sticky=W)
 
+        self.clean_entries = Button(self.edit_frame, text="Clean Entries", bootstyle="warning", cursor="hand2", command=clean_entries)
+        self.clean_entries.grid(row=4, column=4, padx=10, pady=20)
 
+        self.customer_create_button = Button(self.edit_frame, text="Create Customer", bootstyle="success", cursor="hand2", command=create_customer)
+        self.customer_create_button.grid(row=4, column=5, padx=10, pady=20)
 
 

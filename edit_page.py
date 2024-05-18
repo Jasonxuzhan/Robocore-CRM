@@ -2,8 +2,11 @@ from ttkbootstrap import *
 from ttkbootstrap.constants import *
 from tkinter import messagebox
 import database_option
+import leads_treeview
 
+# Instance of Database_option
 robocore_database_option = database_option.Database_Options("localhost", "root", "jason121", "crmdatabase")
+
 
 class Edit_Page:
     def __init__(self):
@@ -30,68 +33,83 @@ class Edit_Page:
         self.answer_by_label = Label(self.edit_frame, text="Answer_By: ")
         self.customer_ID = Label(self.edit_frame, text="Customer ID: ")
 
-        self.nation_entry = Entry(self.edit_frame)
-        self.province_entry = Entry(self.edit_frame)
-        self.city_entry = Entry(self.edit_frame)
-        self.company_entry = Entry(self.edit_frame)
-        self.contact_entry = Entry(self.edit_frame)
-        self.telephone_entry = Entry(self.edit_frame)
-        self.scenario_entry = Entry(self.edit_frame)
-        self.cooperation_entry = Entry(self.edit_frame)
-        self.request_entry = Entry(self.edit_frame)
-        self.lead_from_entry = Entry(self.edit_frame)
-        self.lead_channel_entry = Entry(self.edit_frame)
-        self.channel_detail_entry = Entry(self.edit_frame)
-        self.answer_by_entry = Entry(self.edit_frame)
-        self.customer_ID_label = Label(self.edit_frame, text="ID is generated auto")
+        global nation_entry 
+        global province_entry 
+        global city_entry 
+        global company_entry 
+        global contact_entry 
+        global telephone_entry 
+        global scenario_entry 
+        global cooperation_entry 
+        global request_entry 
+        global lead_from_entry 
+        global lead_channel_entry 
+        global channel_detail_entry 
+        global answer_by_entry 
+        global customer_ID_label  
+
+        nation_entry = Entry(self.edit_frame)
+        province_entry = Entry(self.edit_frame)
+        city_entry = Entry(self.edit_frame)
+        company_entry = Entry(self.edit_frame)
+        contact_entry = Entry(self.edit_frame)
+        telephone_entry = Entry(self.edit_frame)
+        scenario_entry = Entry(self.edit_frame)
+        cooperation_entry = Entry(self.edit_frame)
+        request_entry = Entry(self.edit_frame)
+        lead_from_entry = Entry(self.edit_frame)
+        lead_channel_entry = Entry(self.edit_frame)
+        channel_detail_entry = Entry(self.edit_frame)
+        answer_by_entry = Entry(self.edit_frame)
+        customer_ID_label = Label(self.edit_frame, text="ID is generated auto")
 
         # Position of Labeles and Entries in edit frame
         # Row0
         self.nation_label.grid(row=0, column=0, padx=10, pady=20)
-        self.nation_entry.grid(row=0, column=1)
+        nation_entry.grid(row=0, column=1)
 
         self.province_label.grid(row=0, column=2, padx=10, pady=20)
-        self.province_entry.grid(row=0, column=3)
+        province_entry.grid(row=0, column=3)
 
         self.city_label.grid(row=0, column=4, padx=10, pady=20)
-        self.city_entry.grid(row=0, column=5, padx=10, pady=20)
+        city_entry.grid(row=0, column=5, padx=10, pady=20)
 
         # Row1
         self.company_label.grid(row=1, column=0, padx=10, pady=20)
-        self.company_entry.grid(row=1, column=1)
+        company_entry.grid(row=1, column=1)
 
         self.contact_label.grid(row=1, column=2, padx=10, pady=20)
-        self.contact_entry.grid(row=1, column=3)
+        contact_entry.grid(row=1, column=3)
 
         self.telephone_label.grid(row=1, column=4, padx=10, pady=20)
-        self.telephone_entry.grid(row=1, column=5, padx=10, pady=20)
+        telephone_entry.grid(row=1, column=5, padx=10, pady=20)
 
         # Row2
         self.scenario_label.grid(row=2, column=0, padx=10, pady=20)
-        self.scenario_entry.grid(row=2, column=1)
+        scenario_entry.grid(row=2, column=1)
 
         self.cooperation_label.grid(row=2, column=2, padx=10, pady=20)
-        self.cooperation_entry.grid(row=2, column=3)
+        cooperation_entry.grid(row=2, column=3)
 
         self.request_label.grid(row=2, column=4, padx=10, pady=20)
-        self.request_entry.grid(row=2, column=5, padx=10, pady=20)
+        request_entry.grid(row=2, column=5, padx=10, pady=20)
 
         # Row3
         self.lead_from_label.grid(row=3, column=0, padx=10, pady=20)
-        self.lead_from_entry.grid(row=3, column=1)
+        lead_from_entry.grid(row=3, column=1)
 
         self.lead_channel_label.grid(row=3, column=2, padx=10, pady=20)
-        self.lead_channel_entry.grid(row=3, column=3)
+        lead_channel_entry.grid(row=3, column=3)
 
         self.channel_detail_label.grid(row=3, column=4, padx=10, pady=20)
-        self.channel_detail_entry.grid(row=3, column=5, padx=10, pady=20)
+        channel_detail_entry.grid(row=3, column=5, padx=10, pady=20)
 
         # Row4
         self.answer_by_label.grid(row=4, column=0, padx=10, pady=20)
-        self.answer_by_entry.grid(row=4, column=1)
+        answer_by_entry.grid(row=4, column=1)
 
         self.customer_ID.grid(row=4, column=2, padx=10, pady=20)
-        self.customer_ID_label.grid(row=4, column=3, sticky=W)
+        customer_ID_label.grid(row=4, column=3, sticky=W)
 
         self.clean_entries = Button(self.edit_frame, text="Clean Entries", bootstyle="warning", cursor="hand2", command=self.clean_entries)
         self.clean_entries.grid(row=4, column=4, padx=10, pady=20)
@@ -101,35 +119,50 @@ class Edit_Page:
 
     # Clean entries for clean entries button
     def clean_entries(self) -> None:
-        self.nation_entry.delete(0, END)
-        self.province_entry.delete(0, END) 
-        self.city_entry.delete(0, END) 
-        self.company_entry.delete(0, END) 
-        self.contact_entry.delete(0, END) 
-        self.telephone_entry.delete(0, END) 
-        self.scenario_entry.delete(0, END) 
-        self.cooperation_entry.delete(0, END) 
-        self.request_entry.delete(0, END) 
-        self.lead_from_entry.delete(0, END) 
-        self.lead_channel_entry.delete(0, END) 
-        self.channel_detail_entry.delete(0, END) 
-        self.answer_by_entry.delete(0, END)
+        nation_entry.delete(0, END)
+        province_entry.delete(0, END) 
+        city_entry.delete(0, END) 
+        company_entry.delete(0, END) 
+        contact_entry.delete(0, END) 
+        telephone_entry.delete(0, END) 
+        scenario_entry.delete(0, END) 
+        cooperation_entry.delete(0, END) 
+        request_entry.delete(0, END) 
+        lead_from_entry.delete(0, END) 
+        lead_channel_entry.delete(0, END) 
+        channel_detail_entry.delete(0, END) 
+        answer_by_entry.delete(0, END)
     
-    # Create customer and update into database 
+
+    # Create customer and update into database and show on the leads treeview
     def create_customer(self) -> None:
-        nation = self.nation_entry.get()
-        province = self.province_entry.get() 
-        city = self.city_entry.get() 
-        company = self.company_entry.get() 
-        contact = self.contact_entry.get() 
-        telephone = self.telephone_entry.get() 
-        scenario = self.scenario_entry.get() 
-        cooperation = self.cooperation_entry.get() 
-        request = self.request_entry.get() 
-        lead_from = self.lead_from_entry.get() 
-        lead_channel = self.lead_channel_entry.get() 
-        channel_detail = self.channel_detail_entry.get() 
-        answer_by = self.answer_by_entry.get()
+        global nation 
+        global province 
+        global city 
+        global company 
+        global contact 
+        global telephone
+        global scenario 
+        global cooperation 
+        global request 
+        global lead_from  
+        global lead_channel 
+        global channel_detail 
+        global answer_by
+        
+        nation = nation_entry.get()
+        province = province_entry.get() 
+        city = city_entry.get() 
+        company = company_entry.get() 
+        contact = contact_entry.get() 
+        telephone = telephone_entry.get() 
+        scenario = scenario_entry.get() 
+        cooperation = cooperation_entry.get() 
+        request = request_entry.get() 
+        lead_from = lead_from_entry.get() 
+        lead_channel = lead_channel_entry.get() 
+        channel_detail = channel_detail_entry.get() 
+        answer_by = answer_by_entry.get()
 
         sqlstuff = f"""INSERT INTO leads_information (
                 Register_Date,
@@ -162,22 +195,25 @@ class Edit_Page:
                         channel_detail,
                         answer_by]
         
-        robocore_database_option.cursor_excute(sqlstuff, new_customer)
+        robocore_database_option.my_cursor.execute(sqlstuff, new_customer)
+        robocore_database_option.mydb.commit()
 
-        self.nation_entry.delete(0, END)
-        self.province_entry.delete(0, END) 
-        self.city_entry.delete(0, END) 
-        self.company_entry.delete(0, END) 
-        self.contact_entry.delete(0, END) 
-        self.telephone_entry.delete(0, END) 
-        self.scenario_entry.delete(0, END) 
-        self.cooperation_entry.delete(0, END) 
-        self.request_entry.delete(0, END) 
-        self.lead_from_entry.delete(0, END) 
-        self.lead_channel_entry.delete(0, END) 
-        self.channel_detail_entry.delete(0, END) 
-        self.answer_by_entry.delete(0, END)
-        
+        nation_entry.delete(0, END)
+        province_entry.delete(0, END) 
+        city_entry.delete(0, END) 
+        company_entry.delete(0, END) 
+        contact_entry.delete(0, END) 
+        telephone_entry.delete(0, END) 
+        scenario_entry.delete(0, END) 
+        cooperation_entry.delete(0, END) 
+        request_entry.delete(0, END) 
+        lead_from_entry.delete(0, END) 
+        lead_channel_entry.delete(0, END) 
+        channel_detail_entry.delete(0, END) 
+        answer_by_entry.delete(0, END)
+
+        leads_treeview.Leads_Treeview.query_leads_information_table() # from leads_treeview.py, class method
+
 
 
         

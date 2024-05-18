@@ -7,7 +7,7 @@ root.title("test_treeview")
 tree = Treeview(root, columns=("cities"))
 
 tree.heading("#0", text="state")
-tree.heading("#0", text="city")
+tree.heading("#1", text="city")
 
 tree.insert("", index=END, text="GD", values="shenzhen")
 tree.insert("", index=END, text="Shaanxi", values="xian")

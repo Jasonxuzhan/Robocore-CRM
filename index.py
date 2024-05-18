@@ -16,8 +16,9 @@ def open_follow_create_page() -> object:
     return follow_create_page
 
 # Pages:
-def customer_leads_treeview(master: object) -> object:
+def customer_leads_treeview(master) -> object:
     customer_leads_tree = leads_treeview.Leads_Treeview(master)
+    customer_leads_tree.query_leads_information_table()
     return customer_leads_tree
 
 def customer_follow_treeview(master: object) -> object:

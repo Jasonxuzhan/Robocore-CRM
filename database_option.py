@@ -15,11 +15,6 @@ class Database_Options:
             database = self.database)
         self.my_cursor = self.mydb.cursor()
     
-    def cursor_excute(self, sqlstuff:str, stuff=None) -> None:
-        self.my_cursor.execute(sqlstuff, stuff)
-        self.mydb.commit()
-        self.mydb.close()
-
 
 
 

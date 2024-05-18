@@ -5,12 +5,12 @@ import mysql.connector
 
 class Leads_Treeview:
     def __init__(self, master):
-    # Create leads teeview scroll bar 
+        # Create leads teeview scroll bar 
         self.leads_treeview_scroll = Scrollbar(master)
         self.leads_treeview_scroll.pack(side=RIGHT, fill=Y)
 
         # Create treeview
-        self.leads_treeview = Treeview(master, bootstyle="primary", yscrollcommand=self.leads_treeview_scroll.set, height=15, selectmode="extended")
+        self.leads_treeview = Treeview(master, bootstyle="primary", yscrollcommand=self.leads_treeview_scroll.set, height=15, selectmode=BROWSE)
         self.leads_treeview.pack(side=BOTTOM, padx=5, pady=5)
 
         #Config scroll bar
@@ -69,6 +69,37 @@ class Leads_Treeview:
         self.leads_treeview.heading("Channel Details", text="Channel Detail", anchor=W)
         self.leads_treeview.heading("Answer By", text="Answer", anchor=W)  
 
+        # Query Lead information database and show on the tree view
+       
+        # Clean the leads treeview
+        for record in self.leads_treeview.get_children():
+            self.leads_treeview.delete(record)
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         # Double click event
         self.leads_treeview.bind("<Double-1>", """select_record""")
-        
+
+
+if __name__ == "__main__":
+    pass
+

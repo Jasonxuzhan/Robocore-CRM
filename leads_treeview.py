@@ -74,7 +74,7 @@ class Leads_Treeview:
         leads_treeview.heading("Answer By", text="Answer", anchor=W)  
 
     @classmethod
-     # Query Lead information table and show on the tree view
+     # In database, Query Lead information table and show on the tree view
     def query_leads_information_table(cls):
         # Clean the leads treeview
         for record in leads_treeview.get_children(): # get_children means get iid 

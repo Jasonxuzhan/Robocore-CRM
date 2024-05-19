@@ -16,7 +16,7 @@ class Follow_Page:
         # Create entry forms to update follow_tree view and follow database
         self.status_label = Label(master, text="Status: ")
         self.status_label.grid(row=0, column=0, padx=5, pady=5, sticky=NW)
-
+        
         self.status_entry = Entry(master)
         self.status_entry.grid(row=0, column=1, padx=5, pady=5, sticky=NW)
 
@@ -28,7 +28,7 @@ class Follow_Page:
 
         self.follow_info_label = Label(master, text="Follow Info: ")
         self.follow_info_label.grid(row=2, column=0, padx=5, pady=5, sticky=NW)
-
+        
         self.follow_info_text = Text(master, width=40, height=9, font=("Helvetica", 12), undo=True)
         self.follow_info_text.grid(row=2, column=1, padx=5, pady=5, sticky=NW, columnspan=2)
 

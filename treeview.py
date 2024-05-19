@@ -2,19 +2,52 @@ from ttkbootstrap import *
 from ttkbootstrap.constants import *
 from tkinter import messagebox
 import database_option
+import update_page
+import follow_page
 
 # Instance of Database_option
 robocore_database_option = database_option.Database_Options("localhost", "root", "jason121", "crmdatabase")
+
+ # Event func for double-click in leads treeview
+def select_leads_record(event):
+    # Grab record number
+    selected = leads_treeview.focus()
+    
+    # Grab record value
+    values = leads_treeview.item(selected, "values")
+
+    robocore_update_edit_page = update_page.Update_Page()
+
+    # Insert value into edit page entries
+    robocore_update_edit_page.nation_entry.insert(0, values[2])
+    robocore_update_edit_page.province_entry.insert(0, values[3])
+    robocore_update_edit_page.city_entry.insert(0, values[4])
+    robocore_update_edit_page.company_entry.insert(0, values[5]) 
+    robocore_update_edit_page.contact_entry.insert(0, values[6]) 
+    robocore_update_edit_page.telephone_entry.insert(0, values[7]) 
+    robocore_update_edit_page.scenario_entry.insert(0, values[8]) 
+    robocore_update_edit_page.cooperation_entry.insert(0, values[9]) 
+    robocore_update_edit_page.request_entry.insert(0, values[10]) 
+    robocore_update_edit_page.lead_from_entry.insert(0, values[11]) 
+    robocore_update_edit_page.lead_channel_entry.insert(0, values[12])
+    robocore_update_edit_page.channel_detail_entry.insert(0, values[13])
+    robocore_update_edit_page.answer_by_entry.insert(0, values[14]) 
+    robocore_update_edit_page.customer_ID_label.configure(text=values[0])
+
 
 class Leads_Treeview:
     def __init__(self, master):
         # Create leads teeview scroll bar 
         self.leads_treeview_scroll = Scrollbar(master)
         self.leads_treeview_scroll.pack(side=RIGHT, fill=Y)
-
+        
         # Create treeview
         global leads_treeview
         leads_treeview = Treeview(master, bootstyle="primary", yscrollcommand=self.leads_treeview_scroll.set, height=15, selectmode=BROWSE)
+        
+        # Double click event
+        leads_treeview.bind("<Double-1>", select_leads_record)
+
         leads_treeview.pack(side=BOTTOM, padx=5, pady=5)
 
         #Config scroll bar
@@ -73,6 +106,14 @@ class Leads_Treeview:
         leads_treeview.heading("Channel Details", text="Channel Detail", anchor=W)
         leads_treeview.heading("Answer By", text="Answer", anchor=W)  
 
+        # When record is selected in leads treeview the relative info will be shown on follow tree view
+        self.selected = leads_treeview.focus()
+        self.values = leads_treeview.item(self.selected, "values")
+
+        if self.selected:
+            StringVar = self.values[0]
+
+
     @classmethod
      # In database, Query Lead information table and show on the tree view
     def query_leads_information_table(cls):
@@ -81,7 +122,7 @@ class Leads_Treeview:
             leads_treeview.delete(record)
         
         # Option in Database 
-        sql_stuff = "SELECT * FROM leads_information"
+        sql_stuff = "SELECT * FROM leads_information ORDER BY ID DESC"
         robocore_database_option.my_cursor.execute(sql_stuff)
 
         records = robocore_database_option.my_cursor.fetchall()
@@ -95,34 +136,73 @@ class Leads_Treeview:
                                  record[8], record[9], record[10], record[11], record[12], record[13], record[14]))
         
         robocore_database_option.mydb.commit()
-    
 
 
+   
+class Follow_Treeview:
+    def __init__(self, master):
+        # Create follow treeview scrollbar
+        self.follow_treeview_scroll = Scrollbar(master)
+        self.follow_treeview_scroll.pack(side=RIGHT, fill=Y)
         
+        # Create follow treeview
+        global follow_treeview
+        follow_treeview = Treeview(master, bootstyle="primary", yscrollcommand=self.follow_treeview_scroll.set, height=15)
+        follow_treeview.pack(side=BOTTOM, padx=5, pady=5)
+
+        #Config scroll bar
+        self.follow_treeview_scroll.config(command=follow_treeview.yview)
+
+        # Define follow treeview columns
+        follow_treeview["columns"] = ("Customer ID",
+                                "Follow Status",
+                                "Follow Date",
+                                "Follow Info",
+                                "Follow_By")
+
+        # Format follow treeview columns
+        follow_treeview.column("#0", width=0, stretch=NO)
+        follow_treeview.column("Customer ID", anchor=W, width=40)
+        follow_treeview.column("Follow Status", anchor=W, width=120)
+        follow_treeview.column("Follow Date", anchor=W, width=120)
+        follow_treeview.column("Follow Info", anchor=W, width=240)
+        follow_treeview.column("Follow_By", anchor=W, width=120)
+    
+        # Creat follow treeview headings
+        follow_treeview.heading("#0", text="", anchor=W)
+        follow_treeview.heading("Customer ID", text="ID", anchor=W)
+        follow_treeview.heading("Follow Status", text="Status", anchor=W)
+        follow_treeview.heading("Follow Date", text="Date", anchor=W)
+        follow_treeview.heading("Follow Info", text="Follow Info", anchor=W)
+        follow_treeview.heading("Follow_By", text="Follow_By", anchor=W)    
+
+
+    @classmethod
+    def query_customer_follow_table(cls):
+        # Clean the follow treeview
+        for record in follow_treeview.get_children():
+            follow_treeview.delete(record)
+        
+        # Option in Database 
+        sql_stuff = "SELECT * FROM customer_follow"
+        robocore_database_option.my_cursor.execute(sql_stuff)
+
+        records = robocore_database_option.my_cursor.fetchall()
+
+        for record in records:
+            follow_treeview.insert(
+                                    parent="",
+                                    index="end",
+                                    text="",
+                                    values=(record[0], record[1], record[2], record[3], record[4]))
+        
+        robocore_database_option.mydb.commit()
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # Double click event
-        leads_treeview.bind("<Double-1>", """select_record""")
 
 
 if __name__ == "__main__":

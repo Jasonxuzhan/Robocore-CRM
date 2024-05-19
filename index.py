@@ -3,8 +3,10 @@ from ttkbootstrap.constants import *
 from tkinter import messagebox
 import edit_page
 import follow_page
-import leads_treeview
-import follow_treeview
+import treeview
+
+
+
 
 # Button functions:
 def open_customer_edit_page() -> object:
@@ -17,17 +19,21 @@ def open_follow_create_page() -> object:
 
 # Pages:
 def customer_leads_treeview(master) -> object:
-    customer_leads_tree = leads_treeview.Leads_Treeview(master)
+    customer_leads_tree = treeview.Leads_Treeview(master)
     customer_leads_tree.query_leads_information_table()
     return customer_leads_tree
 
 def customer_follow_treeview(master: object) -> object:
-    customer_follow_tree = follow_treeview.Follow_Treeview(master)
+    customer_follow_tree = treeview.Follow_Treeview(master)
+    customer_follow_tree.query_customer_follow_table() 
     return customer_follow_tree
 
 def customer_follow_input(master: object) -> object:
-    customer_follow_input = follow_page.Follow_Page(master)
-    return customer_follow_input
+    global customer_follow_input_page
+    customer_follow_input_page = follow_page.Follow_Page(master)   
+    return customer_follow_input_page
+
+
 
 
 class Index_Page:

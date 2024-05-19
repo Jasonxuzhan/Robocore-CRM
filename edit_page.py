@@ -2,7 +2,7 @@ from ttkbootstrap import *
 from ttkbootstrap.constants import *
 from tkinter import messagebox
 import database_option
-import leads_treeview
+import treeview
 
 # Instance of Database_option
 robocore_database_option = database_option.Database_Options("localhost", "root", "jason121", "crmdatabase")
@@ -212,7 +212,7 @@ class Edit_Page:
         channel_detail_entry.delete(0, END) 
         answer_by_entry.delete(0, END)
 
-        leads_treeview.Leads_Treeview.query_leads_information_table() # from leads_treeview.py, class method
+        treeview.Leads_Treeview.query_leads_information_table() # from leads_treeview.py, class method
 
 
 

@@ -23,7 +23,7 @@ def create_database(databasename="crmdatabase"):
 
 
 # Create Leads information table 
-def create_leadsinfo_table(databasename="crmdatabase", tablename="Leads_information"):
+def create_leadsinfo_table(databasename="crmdatabase", tablename="leads_information"):
     mydb = mysql.connector.connect(
         host = "localhost",
         user = "root",
@@ -128,7 +128,9 @@ def create_customerfollow_table(databasename="crmdatabase", tablename="customer_
                      Status VARCHAR(255),
                      Date DATE,
                      Follow_Info VARCHAR(255),
-                     Follow_By VARCHAR(255))""")
+                     Follow_By VARCHAR(255),
+                     FOREIGN KEY(ID) REFERENCES leads_information(ID)
+                      )""")
     
     mydb.commit()
     mydb.close()
@@ -154,7 +156,7 @@ def insert_customerfollow(databasename="crmdatabase", tablename="customer_follow
                      Follow_By
                 ) VALUES(%s, %s, NOW(), %s, %s)"""
     
-    record1 = (1, "follow", "send the file to customer", "Jason") 
+    record1 = (2, "follow", "send the file to customer", "Zhao") 
     
     my_cursor.execute(sqlstuff, record1)  
     
@@ -189,8 +191,8 @@ def drop_table(databasename="crmdatabase", tablename="leads_information"):
 
 
 if __name__ == "__main__":
-    drop_table(databasename="crmdatabase", tablename="leads_information")
-    create_leadsinfo_table(databasename="crmdatabase", tablename="leads_information")
+    insert_customerfollow(databasename="crmdatabase", tablename="customer_follow")
+
 
 
 

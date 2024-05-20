@@ -9,7 +9,31 @@ import follow_page
 robocore_database_option = database_option.Database_Options("localhost", "root", "jason121", "crmdatabase")
 
  # Event func for double-click in leads treeview
-def select_leads_record(event):
+def select_leads_record_oneclick(event):
+    selected = leads_treeview.focus()
+    values = leads_treeview.item(selected, "values")
+
+    # Clean the follow treeview
+    for record in follow_treeview.get_children():
+        follow_treeview.delete(record)
+
+    # Option in Database 
+    sql_stuff = f"""SELECT * FROM customer_follow WHERE ID = {values[0]}"""
+    robocore_database_option.my_cursor.execute(sql_stuff)
+
+    records = robocore_database_option.my_cursor.fetchall()
+
+    for record in records:
+        follow_treeview.insert(
+                                parent="",
+                                index="end",
+                                text="",
+                                values=(record[0], record[1], record[2], record[3], record[4]))
+
+    robocore_database_option.mydb.commit()
+
+    
+def select_leads_record_doubleclick(event):
     # Grab record number
     selected = leads_treeview.focus()
     
@@ -34,6 +58,22 @@ def select_leads_record(event):
     robocore_update_edit_page.answer_by_entry.insert(0, values[14]) 
     robocore_update_edit_page.customer_ID_label.configure(text=values[0])
 
+def select_follow_record(event):
+    # Clean the entries
+    follow_page.status_entry.delete(0, END)
+    follow_page.follow_by_entry.delete(0, END)
+    follow_page.follow_info_text.delete(1.0, END)
+
+    # Grab record number
+    selected = follow_treeview.focus()
+
+    # Grab record value
+    values = follow_treeview.item(selected, "values")
+
+    # Insert value into entries and text
+    follow_page.status_entry.insert(0, values[1])
+    follow_page.follow_by_entry.insert(0, values[4])
+    follow_page.follow_info_text.insert(END, values[3])
 
 class Leads_Treeview:
     def __init__(self, master):
@@ -46,9 +86,11 @@ class Leads_Treeview:
         leads_treeview = Treeview(master, bootstyle="primary", yscrollcommand=self.leads_treeview_scroll.set, height=15, selectmode=BROWSE)
         
         # Double click event
-        leads_treeview.bind("<Double-1>", select_leads_record)
-
+        leads_treeview.bind("<Double-1>", select_leads_record_doubleclick)
+        leads_treeview.bind("<ButtonRelease-1>", select_leads_record_oneclick)
+        
         leads_treeview.pack(side=BOTTOM, padx=5, pady=5)
+
 
         #Config scroll bar
         self.leads_treeview_scroll.config(command=leads_treeview.yview)
@@ -106,14 +148,6 @@ class Leads_Treeview:
         leads_treeview.heading("Channel Details", text="Channel Detail", anchor=W)
         leads_treeview.heading("Answer By", text="Answer", anchor=W)  
 
-        # When record is selected in leads treeview the relative info will be shown on follow tree view
-        self.selected = leads_treeview.focus()
-        self.values = leads_treeview.item(self.selected, "values")
-
-        if self.selected:
-            StringVar = self.values[0]
-
-
     @classmethod
      # In database, Query Lead information table and show on the tree view
     def query_leads_information_table(cls):
@@ -148,6 +182,10 @@ class Follow_Treeview:
         # Create follow treeview
         global follow_treeview
         follow_treeview = Treeview(master, bootstyle="primary", yscrollcommand=self.follow_treeview_scroll.set, height=15)
+        
+        #Click release event
+        follow_treeview.bind("<ButtonRelease-1>", select_follow_record)
+
         follow_treeview.pack(side=BOTTOM, padx=5, pady=5)
 
         #Config scroll bar
@@ -197,6 +235,20 @@ class Follow_Treeview:
                                     values=(record[0], record[1], record[2], record[3], record[4]))
         
         robocore_database_option.mydb.commit()
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

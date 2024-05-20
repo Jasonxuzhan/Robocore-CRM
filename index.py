@@ -5,9 +5,6 @@ import edit_page
 import follow_page
 import treeview
 
-
-
-
 # Button functions:
 def open_customer_edit_page() -> object:
     customer_edit_page = edit_page.Edit_Page()
@@ -32,9 +29,6 @@ def customer_follow_input(master: object) -> object:
     global customer_follow_input_page
     customer_follow_input_page = follow_page.Follow_Page(master)   
     return customer_follow_input_page
-
-
-
 
 class Index_Page:
     """Index Page 的页面布局"""
@@ -103,7 +97,7 @@ class Index_Page:
         self.spare_label.pack(padx=5, pady=20)
 
         # Element is innerframe_2
-        self.notice_label = Label(self.inner_frame_2, text="XXX had been selected", anchor=E)
+        self.notice_label = Label(self.inner_frame_2, text="", anchor=E)
         self.notice_label.pack(fill=X, padx=5, pady=10)
 
         self.leads_treeview_frame = Frame(self.inner_frame_2)

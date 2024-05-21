@@ -4,6 +4,8 @@ from tkinter import messagebox
 import edit_page
 import follow_page
 import treeview
+import notice
+import follow_info_input
 
 # Button functions:
 def open_customer_edit_page() -> object:
@@ -11,7 +13,7 @@ def open_customer_edit_page() -> object:
     return customer_edit_page
 
 def open_follow_create_page() -> object:
-    follow_create_page = follow_page.Follow_Info_Input_Page()
+    follow_create_page = follow_info_input.Follow_Info_Input_Page()
     return follow_create_page
 
 # Pages:
@@ -29,6 +31,11 @@ def customer_follow_input(master: object) -> object:
     global customer_follow_input_page
     customer_follow_input_page = follow_page.Follow_Page(master)   
     return customer_follow_input_page
+
+def notice_label(master: object) -> object:
+    notice_label_on_top = notice.Notice_Item(master)
+    return notice_label_on_top
+
 
 class Index_Page:
     """Index Page 的页面布局"""
@@ -97,9 +104,8 @@ class Index_Page:
         self.spare_label.pack(padx=5, pady=20)
 
         # Element is innerframe_2
-        self.notice_label = Label(self.inner_frame_2, text="", anchor=E)
-        self.notice_label.pack(fill=X, padx=5, pady=10)
-
+        notice_label(self.inner_frame_2) # from notice.py
+        
         self.leads_treeview_frame = Frame(self.inner_frame_2)
         self.leads_treeview_frame.pack(padx=5, pady=5)
 
@@ -116,7 +122,7 @@ class Index_Page:
         self.follow_treeview_frame = Frame(self.follow_frame)
         self.follow_treeview_frame.pack(side=LEFT, padx=5, pady=5)
 
-        self.follow_input_frame = Labelframe(self.follow_frame, text=" Follow info input...", relief=FLAT)
+        self.follow_input_frame = Frame(self.follow_frame)
         self.follow_input_frame.pack(side=LEFT, padx=5, pady=5)
 
         # Element in follow treeview frame 

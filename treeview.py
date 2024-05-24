@@ -340,15 +340,115 @@ class Update_Page:
         self.customer_create_button.grid(row=4, column=5, padx=10, pady=20)
 
     def update_record(self):
-        pass
+
+        nation = self.nation_entry.get()    
+        province = self.province_entry.get()   
+        city = self.city_entry.get()    
+        company = self.company_entry.get()    
+        contact = self.contact_entry.get()    
+        telephone = self.telephone_entry.get()   
+        scenario = self.scenario_entry.get()    
+        cooperation = self.cooperation_entry.get()    
+        request = self.request_entry.get()   
+        lead_from = self.lead_from_entry.get()   
+        lead_channel = self.lead_channel_entry.get()    
+        channel_detail = self.channel_detail_entry.get()    
+        answer_by = self.answer_by_entry.get()    
+        customer_id = self.customer_ID_label.cget("text")
+
+        sqlstuff = f"""UPDATE leads_information SET
+                Nation = '{nation}',
+                Province = '{province}',
+                City = '{city}',  
+                Company_Name = '{company}',
+                Contact_Name = '{contact}',
+                Telephone = '{telephone}',
+                Scenario = '{scenario}',
+                Cooperation = '{cooperation}',
+                Desc_of_Request = '{request}',
+                Lead_From = '{lead_from}', 
+                Lead_Channel = '{lead_channel}', 
+                Channel_Details = '{channel_detail}', 
+                Answer_By = '{answer_by}' WHERE ID = {customer_id}"""
+
+        robocore_database_option.my_cursor.execute(sqlstuff)
+        robocore_database_option.mydb.commit()
+
+        self.nation_entry.delete(0, END)   
+        self.province_entry.delete(0, END)   
+        self.city_entry.delete(0, END)    
+        self.company_entry.delete(0, END)    
+        self.contact_entry.delete(0, END)    
+        self.telephone_entry.delete(0, END)   
+        self.scenario_entry.delete(0, END)    
+        self.cooperation_entry.delete(0, END)    
+        self.request_entry.delete(0, END)   
+        self.lead_from_entry.delete(0, END)   
+        self.lead_channel_entry.delete(0, END)    
+        self.channel_detail_entry.delete(0, END)    
+        self.answer_by_entry.delete(0, END)    
+
+        Leads_Treeview.query_leads_information_table()
+        
+
+class Follow_Info_Input_Page:
+    def __init__(self): 
+        self.top = Toplevel()
+        self.top.title("Follow Input")
+
+        self.follow_info_input_frame = Frame(self.top)
+        self.follow_info_input_frame.pack(padx=5, pady=5)
+
+        self.status_label = Label(self.follow_info_input_frame, text="Status: ")
+        self.status_label.grid(row=0, column=0, padx=10, pady=20, sticky=NW)
+
+        self.status_options = ["On Follow", "On Follow", "Give Up", "Transfer to Distributor"]
+        self.status_clicked = StringVar()
+        self.status_clicked.set(self.status_options[0])
+        self.status_entry = OptionMenu(self.follow_info_input_frame, self.status_clicked, *self.status_options)
+        self.status_entry.grid(row=0, column=1, padx=10, pady=20, sticky=NW)
+
+        self.follow_by_label = Label(self.follow_info_input_frame, text="Follow By:")
+        self.follow_by_label.grid(row=1, column=0, padx=10, pady=20, sticky=NW)
+
+        self.name_options = ["Tony","Tony", "Jason"]
+        self.name_clicked = StringVar()
+        self.name_clicked.set(self.name_options[0])
+        self.follow_by_entry = OptionMenu(self.follow_info_input_frame, self.name_clicked, *self.name_options)
+        self.follow_by_entry.grid(row=1, column=1, padx=10, pady=20, sticky=NW)
+
+        self.follow_info_label = Label(self.follow_info_input_frame, text="Follow Info: ")
+        self.follow_info_label.grid(row=2, column=0, padx=10, pady=20, sticky=NW)
+
+        self.follow_info_text = Text(self.follow_info_input_frame, width=40, height=9, font=("Helvetica", 12), undo=True)
+        self.follow_info_text.grid(row=2, column=1, padx=10, pady=20, sticky=NW, columnspan=2)
+
+        self.follow_create_button = Button(self.follow_info_input_frame, text="Create Follow", bootstyle="success", cursor="hand2", command=self.create_follow_info)
+        self.follow_create_button.grid(row=0, column=2, padx=10, pady=20, sticky=NE)
+    
+    def create_follow_info(self):
+        
+            selected = leads_treeview.focus()
 
 
+            
+            global status
+            global follow_by
+            global follow_info
 
+            status = self.status_clicked.get()
+            follow_by = self.name_clicked.get()
+            follow_info = self.follow_info_text.get(1.0, END)
 
-
-
-
-
+            sqlstuff = f"""INSERT INTO customer_follow (
+                    ID,
+                    Status,
+                    Date,  
+                    Follow_Info,
+                    Follow_By
+                ) VALUES(%s, %s, NOW(), %s, %s)"""
+            
+            new_follow = []
 
 
 

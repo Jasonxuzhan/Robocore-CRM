@@ -5,7 +5,7 @@ import edit_page
 import follow_page
 import treeview
 import notice
-import follow_info_input
+
 
 # Button functions:
 def open_customer_edit_page() -> object:
@@ -13,7 +13,7 @@ def open_customer_edit_page() -> object:
     return customer_edit_page
 
 def open_follow_create_page() -> object:
-    follow_create_page = follow_info_input.Follow_Info_Input_Page()
+    follow_create_page = treeview.Follow_Info_Input_Page()
     return follow_create_page
 
 # Pages:

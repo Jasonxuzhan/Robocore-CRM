@@ -427,15 +427,11 @@ class Follow_Info_Input_Page:
         self.follow_create_button.grid(row=0, column=2, padx=10, pady=20, sticky=NE)
     
     def create_follow_info(self):
-        
+        try:
             selected = leads_treeview.focus()
+            values = leads_treeview.item(selected, "values")
 
-
-            
-            global status
-            global follow_by
-            global follow_info
-
+            customer_id = values[0]
             status = self.status_clicked.get()
             follow_by = self.name_clicked.get()
             follow_info = self.follow_info_text.get(1.0, END)
@@ -448,8 +444,18 @@ class Follow_Info_Input_Page:
                     Follow_By
                 ) VALUES(%s, %s, NOW(), %s, %s)"""
             
-            new_follow = []
-
+            new_follow = [customer_id,
+                          status,
+                          follow_info,
+                          follow_by]
+            
+            robocore_database_option.my_cursor.execute(sqlstuff, new_follow)
+            robocore_database_option.mydb.commit()
+            
+            Follow_Treeview.query_customer_follow_table()
+        
+        except:
+             messagebox.showerror("Error", "One customer should be selected in treeview!")
 
 
 

@@ -6,7 +6,6 @@ import follow_page
 import treeview
 import notice
 
-
 # Button functions:
 def open_customer_edit_page() -> object:
     customer_edit_page = edit_page.Edit_Page()
@@ -39,7 +38,7 @@ def notice_label(master: object) -> object:
 
 class Index_Page:
     """Index Page 的页面布局"""
-    def __init__(self, master, user_name="", user_type=""):
+    def __init__(self, master, user_name="" , user_type=""):
         # Main Frame
         self.myFrame = Frame(master)
         self.myFrame.pack()
@@ -101,7 +100,7 @@ class Index_Page:
         self.spare_label.pack(padx=5, pady=20)
 
         self.spare_label = Label(self.spare_frame, text="")
-        self.spare_label.pack(padx=5, pady=20)
+        self.spare_label.pack(padx=20, pady=20)
 
         # Element is innerframe_2
         notice_label(self.inner_frame_2) # from notice.py

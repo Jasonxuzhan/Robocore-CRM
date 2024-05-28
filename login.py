@@ -15,9 +15,6 @@ class Login_Page:
         self.input_frame.pack()
 
         # Element in input frame
-        global username_entry
-        global password_entry
-
         self.login_label = Label(self.input_frame, text="Robocore CRM System", font=("Times", 12)) 
         self.username_label = Label(self.input_frame, text="username: ")
         self.username_entry = Entry(self.input_frame)

@@ -11,21 +11,19 @@ from tkinter import messagebox
 # root.geometry("1700x800")
 
 
-
-def login_btn():    
-    username = "123"
-    password = "123"
-
-    if robocore_log.username_entry.get() == username and robocore_log.password_entry.get() == password:
-        root.destroy() 
-    else:
-        messagebox.showerror(title="Login Failure", message="Login Failure")
-  
+def main_page():
+    root = Window(themename="superhero")
+    root.title("Robocore CRM System V1.0")
+    root.iconbitmap()
+    root.geometry("1700x800")
+    robocore_index = index.Index_Page(root, user_name="Jason" , user_type="Admin")
+    root.mainloop()
+    return robocore_index  
 
 def log_page():
-    global root
-    root = Window(themename="solar")
+    root = Window(themename="superhero")
     root.title("Robocore CRM System Login")
+    root.iconbitmap()
     root.geometry("400x400")
     global robocore_log
     robocore_log = login.Login_Page(root)
@@ -34,17 +32,18 @@ def log_page():
     return robocore_log
 
 
-def main_page():
-    root = Window(themename="superhero")
-    root.title("Robocore CRM System V1.0")
-    root.iconbitmap()
-    root.geometry("1700x800")
-    robocore_index = index.Index_Page(root, user_name="Jason" , user_type="Admin")
-    root.mainloop()
-    return robocore_index
+# def login_btn():    
+#     username = "123"
+#     password = "123"
 
+#     if robocore_log.username_entry.get() == username and robocore_log.password_entry.get() == password:
+#         root.destroy() 
+#     else:
+#         messagebox.showerror(title="Login Failure", message="Login Failure")
 
 if __name__ == "__main__":
     log_page()
+
+    
 
     

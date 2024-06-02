@@ -130,14 +130,15 @@ class Index_Page:
         # Element in follow input labelframe     
         customer_follow_input(self.follow_input_frame) # from follow_page.py
 
+def main_page():
+    root = Window(themename="superhero")
+    root.title("Robocore CRM System V1.0")
+    root.iconbitmap()
+    root.geometry("1700x800+100+100")
+    robocore_index = Index_Page(root, user_name="Admin" , user_type="Admin")
+    root.mainloop()
+    return robocore_index  
 
-
-
-
-
-
-
-
-
-
+if __name__ == "__main__":
+    main_page()
 

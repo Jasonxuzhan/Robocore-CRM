@@ -5,6 +5,10 @@ import database_option
 import follow_page
 import notice
 
+# Configure the style 
+#style = Style()
+#style.configure("object", font=())
+
 # Instance of Database_option
 robocore_database_option = database_option.Database_Options("localhost", "root", "jason121", "crmdatabase")
 
@@ -411,7 +415,7 @@ class Follow_Info_Input_Page:
         self.follow_by_label = Label(self.follow_info_input_frame, text="Follow By:")
         self.follow_by_label.grid(row=1, column=0, padx=10, pady=20, sticky=NW)
 
-        self.name_options = ["Tony","Tony", "Jason"]
+        self.name_options = ["Tony", "Tony", "Jason"]
         self.name_clicked = StringVar()
         self.name_clicked.set(self.name_options[0])
         self.follow_by_entry = OptionMenu(self.follow_info_input_frame, self.name_clicked, *self.name_options)

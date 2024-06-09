@@ -32,13 +32,28 @@ class LoginPage(Toplevel):
         self.login_button.grid(row=3, column=0, columnspan=2, pady=20)
 
     def login_button(self):
-        username = "123"
-        password = "123"
-        if self.username_entry.get() == username and self.password_entry.get() == password:
-            self.callback()  # Call the callback function to initialize the main page
-            self.destroy()  # Close the login window
-        else:
-            messagebox.showerror(title="Login Failure", message="Login Failure")
+
+        mydb = mysql.connector.connect(
+            host = "localhost",
+            user = "root",
+            passwd = "jason121",
+            auth_plugin = "mysql_native_password", 
+            database = "crmdatabase"
+            )
+
+        my_cursor = mydb.cursor()
+
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+    
+        sqlstuff = f"SELECT * FROM user_data WHERE User_Name = '{username}'"
+        my_cursor.execute(sqlstuff)
+        for data in my_cursor:
+            if password == data[2]:
+                self.callback()  # Call the callback function to initialize the main page
+                self.destroy()  # Close the login window
+            else:
+                 messagebox.showerror(title="Login Failure", message="Login Failure")
 
 class MainPage(Window):
     def __init__(self):

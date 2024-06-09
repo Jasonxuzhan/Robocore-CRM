@@ -183,6 +183,100 @@ def drop_table(databasename="crmdatabase", tablename="leads_information"):
     mydb.commit()
     mydb.close()
 
+# Create user data table 
+def user_table(databasename="crmdatabase", tablename="user_data"):
+     mydb = mysql.connector.connect(
+        host = "localhost",
+        user = "root",
+        passwd = "jason121",
+        auth_plugin = "mysql_native_password", 
+        database = databasename
+        )
+     my_cursor = mydb.cursor()
+
+     sqlstuff = my_cursor.execute(f"""CREATE TABLE IF NOT EXISTS {tablename} (
+                    ID INT AUTO_INCREMENT PRIMARY KEY,
+                    User_Name VARCHAR(255),
+                    Password VARCHAR(255),
+                    Type VARCHAR(255),
+                    Generate_Date DATE
+                    )""") 
+     
+     my_cursor.execute(sqlstuff)
+
+     mydb.commit()
+     mydb.close()
+
+# Insert user data 
+def insert_userdata(databasename="crmdatabase", tablename="user_data"):
+    mydb = mysql.connector.connect(
+        host = "localhost",
+        user = "root",
+        passwd = "jason121",
+        auth_plugin = "mysql_native_password", 
+        database = databasename
+        )
+
+    my_cursor = mydb.cursor()
+
+    sqlstuff = f"""INSERT INTO {tablename} (
+                     User_Name,
+                     Password,
+                     Type,
+                     Generate_Date
+                ) VALUES(%s, %s, %s, NOW())"""
+    
+    record1 = ("admin", "admin", "admin") 
+    
+    my_cursor.execute(sqlstuff, record1)  
+    
+    mydb.commit()
+    mydb.close()
+
+# Show all users data
+def show_userdata(databasename="crmdatabase", tablename="user_data"):
+    mydb = mysql.connector.connect(
+        host = "localhost",
+        user = "root",
+        passwd = "jason121",
+        auth_plugin = "mysql_native_password", 
+        database = databasename
+        )
+
+    my_cursor = mydb.cursor()
+    
+    sqlstuff = f"SELECT * From {tablename}"
+    my_cursor.execute(sqlstuff)
+
+    for data in my_cursor:
+        print(data)
+    
+
+def check_possible(databasename="crmdatabase", tablename="user_data"):
+    mydb = mysql.connector.connect(
+        host = "localhost",
+        user = "root",
+        passwd = "jason121",
+        auth_plugin = "mysql_native_password", 
+        database = databasename
+        )
+
+    my_cursor = mydb.cursor()
+    
+    sqlstuff = f"SELECT * FROM {tablename} WHERE User_Name = 'admin'"
+    my_cursor.execute(sqlstuff)
+    for data in my_cursor:
+        if "jason121" == data[2]:
+            print("Access OK")
+        else:
+            print("Access denied")
+
+    
+
+
+
+
+
 
 
 
@@ -191,7 +285,8 @@ def drop_table(databasename="crmdatabase", tablename="leads_information"):
 
 
 if __name__ == "__main__":
-    insert_customerfollow(databasename="crmdatabase", tablename="customer_follow")
+    check_possible()
+
 
 
 

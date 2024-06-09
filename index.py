@@ -5,6 +5,7 @@ import edit_page
 import follow_page
 import treeview
 import notice
+import user_page
 
 # Button functions:
 def open_customer_edit_page() -> object:
@@ -15,6 +16,9 @@ def open_follow_create_page() -> object:
     follow_create_page = treeview.Follow_Info_Input_Page()
     return follow_create_page
 
+def create_user() -> object:
+    user_page.Create_User("Create User", (600, 600))
+    
 # Pages:
 def customer_leads_treeview(master) -> object:
     customer_leads_tree = treeview.Leads_Treeview(master)
@@ -72,7 +76,7 @@ class Index_Page:
         self.options_frame.pack(padx=5, pady=10, anchor=NW)
 
         # Spare frame 备用Frame
-        self.spare_frame = Labelframe(self.inner_frame_1, text="", relief=FLAT, bootstyle="primary")
+        self.spare_frame = Labelframe(self.inner_frame_1, text="Admin Options:", relief=FLAT)
         self.spare_frame.pack(padx=5, pady=10, anchor=NW)
   
         # Elements in user_info_frame
@@ -90,8 +94,8 @@ class Index_Page:
         self.create_follow_info_button.pack(padx=5, pady=10, anchor=W)
 
         # Elements in spqre frame 备用元素，占位用
-        self.spare_label = Label(self.spare_frame, text="")
-        self.spare_label.pack(padx=5, pady=20)
+        self.create_user_button = Button(self.spare_frame, text="Create User", cursor="hand2", bootstyle="info-link", command=create_user)
+        self.create_user_button.pack(padx=5, pady=20)
 
         self.spare_label = Label(self.spare_frame, text="")
         self.spare_label.pack(padx=5, pady=20)

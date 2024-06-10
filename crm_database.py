@@ -245,7 +245,7 @@ def show_userdata(databasename="crmdatabase", tablename="user_data"):
 
     my_cursor = mydb.cursor()
     
-    sqlstuff = f"SELECT * From {tablename}"
+    sqlstuff = f"SELECT `ID`,`User_Name` From {tablename} ORDER BY `Password`"
     my_cursor.execute(sqlstuff)
 
     for data in my_cursor:
@@ -285,7 +285,7 @@ def check_possible(databasename="crmdatabase", tablename="user_data"):
 
 
 if __name__ == "__main__":
-    check_possible()
+    show_userdata(databasename="crmdatabase", tablename="user_data")
 
 
 
